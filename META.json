@@ -1,5 +1,5 @@
 {
-   "abstract" : "It's new $module",
+   "abstract" : "use ~/.forward plaggerable",
    "author" : [
       "Hiroyuki Akabane <hirobanex@gmail.com>"
    ],
@@ -43,12 +43,15 @@
       },
       "runtime" : {
          "requires" : {
+            "Email::MIME" : "0",
+            "Module::Pluggable" : "0",
             "perl" : "5.008005"
          }
       },
       "test" : {
          "requires" : {
-            "Test::More" : "0.98"
+            "Test::More" : "0.98",
+            "Test::Output" : "0"
          }
       }
    },
