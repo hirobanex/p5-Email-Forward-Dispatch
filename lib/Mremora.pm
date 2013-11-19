@@ -17,6 +17,7 @@ sub new {
         {
             my $default_class = "Mremora::Hooks::Default";
             no strict 'refs'; ## no critic.
+            no warnings 'redefine';
             push @{"$default_class\::ISA"}, 'Mremora::Hooks';
             *{"$default_class\::check"}   = sub { my ($class, $parsed) = @_;  $args{check_cb}->($default_class,$parsed); };
             *{"$default_class\::forward"} = sub { my ($class, $parsed) = @_;  $args{forward_cb}->($default_class,$parsed); };
