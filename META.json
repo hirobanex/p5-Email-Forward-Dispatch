@@ -56,5 +56,16 @@
       }
    },
    "release_status" : "unstable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/hirobanex/p5-Mremora/issues"
+      },
+      "homepage" : "https://github.com/hirobanex/p5-Mremora",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/hirobanex/p5-Mremora.git",
+         "web" : "https://github.com/hirobanex/p5-Mremora"
+      }
+   },
    "version" : "0.01"
 }

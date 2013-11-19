@@ -95,5 +95,7 @@ it under the same terms as Perl itself.
 
 Hiroyuki Akabane E<lt>hirobanex@gmail.comE<gt>
 
+=for stopwords plaggerable
+
 =cut
 

@@ -1,1 +1,4 @@
 name = "Mremora"
+
+[release]
+do_not_upload_to_cpan=true
