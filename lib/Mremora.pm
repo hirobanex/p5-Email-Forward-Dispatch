@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use Email::MIME;
 use Module::Pluggable::Object;
+use Scalar::Util;
 
 our $VERSION = "0.02";
 
@@ -14,8 +15,11 @@ sub new {
         $args{check_cb}   or die 'you must register check_cb!';
         $args{forward_cb} or die 'you must register forward_cb!';
 
+
         {
-            my $default_class = "Mremora::Hooks::Default";
+            my $addr1 = Scalar::Util::refaddr($args{check_cb});
+            my $addr2 = Scalar::Util::refaddr($args{forward_cb});
+            my $default_class = "Mremora::Hooks::Default".$addr1.$addr2;
             no strict 'refs'; ## no critic.
             no warnings 'redefine';
             push @{"$default_class\::ISA"}, 'Mremora::Hooks';
@@ -36,16 +40,22 @@ sub new {
 sub run {
     my ($self) = @_;
 
-    my @hooks = Module::Pluggable::Object->new(
-        require     => 1,
-        search_path => $self->{hooks_dir},
-    )->plugins;
+    my @hooks = $self->fetch_hooks();
 
     for my $hook (@hooks) {
         next unless $hook->check($self->{email});
 
         $hook->forward($self->{email});
     }
+}
+
+sub fetch_hooks {
+    my $self = shift;
+
+    my @hooks = Module::Pluggable::Object->new(
+        require     => 1,
+        search_path => $self->{hooks_dir},
+    )->plugins;
 }
 
 1;

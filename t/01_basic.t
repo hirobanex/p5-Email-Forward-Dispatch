@@ -20,5 +20,22 @@ subtest 'callback interface' => sub {
     stdout_like {$dispatcher->run} qr/gmail/,;
 };
 
+subtest 'hook class name diff' => sub {
+    
+    my @hooks1 = Mremora->new(
+            mail       => $mail,
+            check_cb   => sub { 0 },
+            forward_cb => sub { 0 },
+    )->fetch_hooks;
+    
+    my @hooks2 = Mremora->new(
+            mail       => $mail,
+            check_cb   => sub { 1 },
+            forward_cb => sub { 1 },
+    )->fetch_hooks;
+
+    isnt $hooks1[0], $hooks2[0];
+};
+
 done_testing;
 
