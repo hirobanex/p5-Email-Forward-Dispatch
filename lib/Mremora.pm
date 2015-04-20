@@ -13,14 +13,14 @@ sub new {
 
     my $default_hook = "";
     unless ($args{hooks_dir}) {
-        $args{check_cb}   or die 'you must register check_cb!';
+        $args{is_forward_cb}   or die 'you must register is_forward_cb!';
         $args{forward_cb} or die 'you must register forward_cb!';
 
         {
             $default_hook = "Mremora::Hooks::Default".$id++;
             no strict 'refs'; ## no critic.
             push @{"$default_hook\::ISA"}, 'Mremora::Hooks';
-            *{"$default_hook\::check"}   = sub { my ($class, $parsed) = @_;  $args{check_cb}->($default_hook,$parsed); };
+            *{"$default_hook\::is_forward"}   = sub { my ($class, $parsed) = @_;  $args{is_forward_cb}->($default_hook,$parsed); };
             *{"$default_hook\::forward"} = sub { my ($class, $parsed) = @_;  $args{forward_cb}->($default_hook,$parsed); };
         }
     }
@@ -42,11 +42,11 @@ sub run {
     my @hooks = $self->fetch_hooks();
 
     if (my $default_hook = $self->{default_hook}) {
-        $default_hook->check($self->{email})
+        $default_hook->is_forward($self->{email})
             and $default_hook->forward($self->{email});
     }else{
         for my $hook (@hooks) {
-            next unless $hook->check($self->{email});
+            next unless $hook->is_forward($self->{email});
 
             $hook->forward($self->{email});
         }
@@ -77,8 +77,8 @@ Mremora - use ~/.forward plaggerable
     use Mremora;
 
     my $dispatcher = Mremora->new(
-        check_cb   => sub { ($_[1]->header('To') =~ /hirobanex\@gmail\.com/) ? 1 : 0 },
-        forward_cb => sub { print $_[1]->header('To') },
+        is_forward_cb   => sub { ($_[1]->header('To') =~ /hirobanex\@gmail\.com/) ? 1 : 0 },
+        forward_cb      => sub { print $_[1]->header('To') },
     );
 
     or 

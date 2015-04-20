@@ -8,12 +8,11 @@ Mremora - use ~/.forward plaggerable
     use Mremora;
 
     my $dispatcher = Mremora->new(
-        check_cb   => sub { ($_[1]->header('To') =~ /hirobanex\@gmail\.com/) ? 1 : 0 },
-        forward_cb => sub { print $_[1]->header('To') },
+        is_forward_cb   => sub { ($_[1]->header('To') =~ /hirobanex\@gmail\.com/) ? 1 : 0 },
+        forward_cb      => sub { print $_[1]->header('To') },
     );
 
     or 
-
     my $dispatcher = Mremora->new(
         mail      => scalar do {local $/; <STDIN>; },
         hooks_dir => "MyMailNotify::Hooks",

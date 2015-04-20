@@ -5,9 +5,9 @@ use utf8;
 
 sub new { bless +{} ,+shift }
 
-sub check { die "you must override this method(If you wanna forward, return true)" }
+sub is_forward { die "you must override this method(If you wanna forward, return true)" }
 
-sub forward { die "you must override this method" }
+sub forward    { die "you must override this method" }
 
 1;
 

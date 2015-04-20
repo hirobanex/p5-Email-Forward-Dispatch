@@ -12,9 +12,9 @@ my $mail = do {local $/; <$fh>; };
 subtest 'callback interface' => sub {
     
     my $dispatcher = Mremora->new(
-            mail       => $mail,
-            check_cb   => sub { ($_[1]->header('To') =~ /hirobanex\@gmail\.com/) ? 1 : 0 },
-            forward_cb => sub { print $_[1]->header('To') },
+            mail          => $mail,
+            is_forward_cb => sub { ($_[1]->header('To') =~ /hirobanex\@gmail\.com/) ? 1 : 0 },
+            forward_cb    => sub { print $_[1]->header('To') },
     );
 
     stdout_like {$dispatcher->run} qr/gmail/,;
@@ -23,15 +23,15 @@ subtest 'callback interface' => sub {
 subtest 'hook class name diff' => sub {
     
     my $default_hooks1 = Mremora->new(
-            mail       => $mail,
-            check_cb   => sub { 0 },
-            forward_cb => sub { 0 },
+            mail          => $mail,
+            is_forward_cb => sub { 0 },
+            forward_cb    => sub { 0 },
     )->default_hook;
     
     my $default_hooks2 = Mremora->new(
-            mail       => $mail,
-            check_cb   => sub { 1 },
-            forward_cb => sub { 1 },
+            mail          => $mail,
+            is_forward_cb => sub { 1 },
+            forward_cb    => sub { 1 },
     )->default_hook;
 
     isnt $default_hooks1, $default_hooks2;
