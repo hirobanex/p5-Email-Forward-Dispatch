@@ -1,5 +1,2 @@
 name = "Email-Forward-Dispatch"
 badges = ["travis", "coveralls"]
-
-[release]
-do_not_upload_to_cpan=true
