@@ -22,19 +22,19 @@ subtest 'callback interface' => sub {
 
 subtest 'hook class name diff' => sub {
     
-    my @hooks1 = Mremora->new(
+    my $default_hooks1 = Mremora->new(
             mail       => $mail,
             check_cb   => sub { 0 },
             forward_cb => sub { 0 },
-    )->fetch_hooks;
+    )->default_hook;
     
-    my @hooks2 = Mremora->new(
+    my $default_hooks2 = Mremora->new(
             mail       => $mail,
             check_cb   => sub { 1 },
             forward_cb => sub { 1 },
-    )->fetch_hooks;
+    )->default_hook;
 
-    isnt $hooks1[0], $hooks2[0];
+    isnt $default_hooks1, $default_hooks2;
 };
 
 done_testing;

@@ -4,48 +4,52 @@ use strict;
 use warnings;
 use Email::MIME;
 use Module::Pluggable::Object;
-use Scalar::Util;
 
 our $VERSION = "0.02";
 
+my $id = 0;
 sub new {
     my ($class,%args) = @_;
 
+    my $default_hook = "";
     unless ($args{hooks_dir}) {
         $args{check_cb}   or die 'you must register check_cb!';
         $args{forward_cb} or die 'you must register forward_cb!';
 
-
         {
-            my $addr1 = Scalar::Util::refaddr($args{check_cb});
-            my $addr2 = Scalar::Util::refaddr($args{forward_cb});
-            my $default_class = "Mremora::Hooks::Default".$addr1.$addr2;
+            $default_hook = "Mremora::Hooks::Default".$id++;
             no strict 'refs'; ## no critic.
-            no warnings 'redefine';
-            push @{"$default_class\::ISA"}, 'Mremora::Hooks';
-            *{"$default_class\::check"}   = sub { my ($class, $parsed) = @_;  $args{check_cb}->($default_class,$parsed); };
-            *{"$default_class\::forward"} = sub { my ($class, $parsed) = @_;  $args{forward_cb}->($default_class,$parsed); };
+            push @{"$default_hook\::ISA"}, 'Mremora::Hooks';
+            *{"$default_hook\::check"}   = sub { my ($class, $parsed) = @_;  $args{check_cb}->($default_hook,$parsed); };
+            *{"$default_hook\::forward"} = sub { my ($class, $parsed) = @_;  $args{forward_cb}->($default_hook,$parsed); };
         }
     }
 
     my $mail = $args{mail} || do {local $/; <STDIN>; } || die 'you must set mail option or STDIN !';
 
     my $self = bless +{
-        email     => Email::MIME->new($mail),
-        hooks_dir => $args{hooks_dir} || 'Mremora::Hooks',
+        email         => Email::MIME->new($mail),
+        hooks_dir     => $args{hooks_dir} || 'Mremora::Hooks',
+        default_hook => $default_hook,   
     }, $class;
-
 }
+
+sub default_hook { $_[0]->{default_hook} }
 
 sub run {
     my ($self) = @_;
 
     my @hooks = $self->fetch_hooks();
 
-    for my $hook (@hooks) {
-        next unless $hook->check($self->{email});
+    if (my $default_hook = $self->{default_hook}) {
+        $default_hook->check($self->{email})
+            and $default_hook->forward($self->{email});
+    }else{
+        for my $hook (@hooks) {
+            next unless $hook->check($self->{email});
 
-        $hook->forward($self->{email});
+            $hook->forward($self->{email});
+        }
     }
 }
 
