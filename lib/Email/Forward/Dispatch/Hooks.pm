@@ -1,4 +1,4 @@
-package Mremora::Hooks;
+package Email::Forward::Dispatch::Hooks;
 use strict;
 use warnings;
 use utf8;

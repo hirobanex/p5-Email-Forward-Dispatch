@@ -1,4 +1,4 @@
-name = "Mremora"
+name = "Email-Forward-Dispatch"
 
 [release]
 do_not_upload_to_cpan=true

@@ -1,4 +1,4 @@
-package Mremora;
+package Email::Forward::Dispatch;
 use 5.008005;
 use strict;
 use warnings;
@@ -17,9 +17,9 @@ sub new {
         $args{forward_cb} or die 'you must register forward_cb!';
 
         {
-            $default_hook = "Mremora::Hooks::Default".$id++;
+            $default_hook = "Email::Forward::Dispatch::Hooks::Default".$id++;
             no strict 'refs'; ## no critic.
-            push @{"$default_hook\::ISA"}, 'Mremora::Hooks';
+            push @{"$default_hook\::ISA"}, 'Email::Forward::Dispatch::Hooks';
             *{"$default_hook\::is_forward"}   = sub { my ($class, $parsed) = @_;  $args{is_forward_cb}->($default_hook,$parsed); };
             *{"$default_hook\::forward"} = sub { my ($class, $parsed) = @_;  $args{forward_cb}->($default_hook,$parsed); };
         }
@@ -29,7 +29,7 @@ sub new {
 
     my $self = bless +{
         email         => Email::MIME->new($mail),
-        hooks_dir     => $args{hooks_dir} || 'Mremora::Hooks',
+        hooks_dir     => $args{hooks_dir} || 'Email::Forward::Dispatch::Hooks',
         default_hook => $default_hook,   
     }, $class;
 }
@@ -69,21 +69,21 @@ __END__
 
 =head1 NAME
 
-Mremora - use ~/.forward plaggerable
+Email::Forward::Dispatch - use ~/.forward plaggerable
 
 =head1 SYNOPSIS
 
     # in /home/hirobanex/script.pl
-    use Mremora;
+    use Email::Forward::Dispatch;
 
-    my $dispatcher = Mremora->new(
+    my $dispatcher = Email::Forward::Dispatch->new(
         is_forward_cb   => sub { ($_[1]->header('To') =~ /hirobanex\@gmail\.com/) ? 1 : 0 },
         forward_cb      => sub { print $_[1]->header('To') },
     );
 
     or 
 
-    my $dispatcher = Mremora->new(
+    my $dispatcher = Email::Forward::Dispatch->new(
         mail      => scalar do {local $/; <STDIN>; },
         hooks_dir => "MyMailNotify::Hooks",
     );
@@ -96,7 +96,7 @@ Mremora - use ~/.forward plaggerable
 
 =head1 DESCRIPTION
 
-Mremora is Email forward utility tool. 
+Email::Forward::Dispatch is Email forward utility tool. 
 
 =head1 LICENSE
 

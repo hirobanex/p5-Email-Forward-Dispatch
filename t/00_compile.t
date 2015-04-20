@@ -2,7 +2,7 @@ use strict;
 use Test::More;
 
 use_ok $_ for qw(
-    Mremora
+    Email::Forward::Dispatch
 );
 
 done_testing;

@@ -2,7 +2,7 @@ use strict;
 use warnings;
 use utf8;
 use Test::More;
-use Mremora;
+use Email::Forward::Dispatch;
 use Test::Output;
 
 my $fname = "./t/sample_mail.txt";
@@ -11,7 +11,7 @@ my $mail = do {local $/; <$fh>; };
 
 subtest 'callback interface' => sub {
     
-    my $dispatcher = Mremora->new(
+    my $dispatcher = Email::Forward::Dispatch->new(
             mail          => $mail,
             is_forward_cb => sub { ($_[1]->header('To') =~ /hirobanex\@gmail\.com/) ? 1 : 0 },
             forward_cb    => sub { print $_[1]->header('To') },
@@ -22,13 +22,13 @@ subtest 'callback interface' => sub {
 
 subtest 'hook class name diff' => sub {
     
-    my $default_hooks1 = Mremora->new(
+    my $default_hooks1 = Email::Forward::Dispatch->new(
             mail          => $mail,
             is_forward_cb => sub { 0 },
             forward_cb    => sub { 0 },
     )->default_hook;
     
-    my $default_hooks2 = Mremora->new(
+    my $default_hooks2 = Email::Forward::Dispatch->new(
             mail          => $mail,
             is_forward_cb => sub { 1 },
             forward_cb    => sub { 1 },

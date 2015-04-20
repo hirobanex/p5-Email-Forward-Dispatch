@@ -23,8 +23,8 @@ my %args = (
         'Module::Build' => 0.38,
     },
 
-    name            => 'Mremora',
-    module_name     => 'Mremora',
+    name            => 'Email-Forward-Dispatch',
+    module_name     => 'Email::Forward::Dispatch',
     allow_pureperl => 0,
 
     script_files => [glob('script/*'), glob('bin/*')],

@@ -1,19 +1,19 @@
 # NAME
 
-Mremora - use ~/.forward plaggerable
+Email::Forward::Dispatch - use ~/.forward plaggerable
 
 # SYNOPSIS
 
     # in /home/hirobanex/script.pl
-    use Mremora;
+    use Email::Forward::Dispatch;
 
-    my $dispatcher = Mremora->new(
+    my $dispatcher = Email::Forward::Dispatch->new(
         is_forward_cb   => sub { ($_[1]->header('To') =~ /hirobanex\@gmail\.com/) ? 1 : 0 },
         forward_cb      => sub { print $_[1]->header('To') },
     );
 
     or 
-    my $dispatcher = Mremora->new(
+    my $dispatcher = Email::Forward::Dispatch->new(
         mail      => scalar do {local $/; <STDIN>; },
         hooks_dir => "MyMailNotify::Hooks",
     );
@@ -27,7 +27,7 @@ Mremora - use ~/.forward plaggerable
 
 # DESCRIPTION
 
-Mremora is Email forward utility tool. 
+Email::Forward::Dispatch is Email forward utility tool. 
 
 # LICENSE
 
