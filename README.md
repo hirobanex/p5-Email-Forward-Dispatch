@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/hirobanex/p5-Mremora.png?branch=master)](https://travis-ci.org/hirobanex/p5-Mremora) [![Coverage Status](https://coveralls.io/repos/hirobanex/p5-Mremora/badge.png?branch=master)](https://coveralls.io/r/hirobanex/p5-Mremora?branch=master)
+[![Build Status](https://travis-ci.org/hirobanex/p5-Email-Forward-Dispatch.png?branch=master)](https://travis-ci.org/hirobanex/p5-Email-Forward-Dispatch) [![Coverage Status](https://coveralls.io/repos/hirobanex/p5-Email-Forward-Dispatch/badge.png?branch=master)](https://coveralls.io/r/hirobanex/p5-Email-Forward-Dispatch?branch=master)
 # NAME
 
 Email::Forward::Dispatch - use ~/.forward plaggerable

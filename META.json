@@ -58,13 +58,13 @@
    "release_status" : "unstable",
    "resources" : {
       "bugtracker" : {
-         "web" : "https://github.com/hirobanex/p5-Mremora/issues"
+         "web" : "https://github.com/hirobanex/p5-Email-Forward-Dispatch/issues"
       },
-      "homepage" : "https://github.com/hirobanex/p5-Mremora",
+      "homepage" : "https://github.com/hirobanex/p5-Email-Forward-Dispatch",
       "repository" : {
          "type" : "git",
-         "url" : "git://github.com/hirobanex/p5-Mremora.git",
-         "web" : "https://github.com/hirobanex/p5-Mremora"
+         "url" : "git://github.com/hirobanex/p5-Email-Forward-Dispatch.git",
+         "web" : "https://github.com/hirobanex/p5-Email-Forward-Dispatch"
       }
    },
    "version" : "0.02"
