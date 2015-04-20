@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/hirobanex/p5-Email-Forward-Dispatch.png?branch=master)](https://travis-ci.org/hirobanex/p5-Email-Forward-Dispatch) [![Coverage Status](https://coveralls.io/repos/hirobanex/p5-Email-Forward-Dispatch/badge.png?branch=master)](https://coveralls.io/r/hirobanex/p5-Email-Forward-Dispatch?branch=master)
+[![Build Status](https://travis-ci.org/hirobanex/p5-Email-Forward-Dispatch.svg?branch=master)](https://travis-ci.org/hirobanex/p5-Email-Forward-Dispatch) [![Coverage Status](https://img.shields.io/coveralls/hirobanex/p5-Email-Forward-Dispatch/master.svg)](https://coveralls.io/r/hirobanex/p5-Email-Forward-Dispatch?branch=master)
 # NAME
 
 Email::Forward::Dispatch - use ~/.forward plaggerable
@@ -14,13 +14,13 @@ Email::Forward::Dispatch - use ~/.forward plaggerable
     );
 
     or 
+
     my $dispatcher = Email::Forward::Dispatch->new(
         mail      => scalar do {local $/; <STDIN>; },
         hooks_dir => "MyMailNotify::Hooks",
     );
 
     $dispatcher->run;
-
 
 
     #in /home/hirobanex/.forward
